@@ -5,9 +5,9 @@ export interface Authority {
 export interface User {
   username: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
+  firstname: string;
+  lastname: string;
+  phonenumber: string;
   authorities: Array<Authority>;
 }
 

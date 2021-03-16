@@ -1,4 +1,5 @@
 // import config from 'config';
+import { RegisterForm } from 'app/pages/Register';
 import { User } from 'types/User';
 import { api, LocalStorage } from './';
 
@@ -12,6 +13,7 @@ const userService = {
   login,
   logout,
   getUser,
+  register,
 };
 
 function login(username: string, password: string) {
@@ -37,6 +39,10 @@ function getUser() {
     LocalStorage.setUser(user);
     return user;
   });
+}
+
+function register(registerForm: RegisterForm) {
+  return api.post('/register', registerForm);
 }
 
 export default userService;
