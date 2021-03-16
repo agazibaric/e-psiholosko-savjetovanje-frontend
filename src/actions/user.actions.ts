@@ -9,7 +9,7 @@ export const userActions = {
   logout,
 };
 
-function login(username, password) {
+function login(username: string, password: string) {
   return dispatch => {
     dispatch(request({ username }));
 

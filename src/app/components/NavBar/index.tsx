@@ -206,6 +206,9 @@ export default function NavBar() {
             <NavLink className={classes.link} to="/login">
               Login
             </NavLink>
+            <NavLink className={classes.link} to="/register">
+              Register
+            </NavLink>
             <NavLink className={classes.link} to="/profile">
               Profile
             </NavLink>
