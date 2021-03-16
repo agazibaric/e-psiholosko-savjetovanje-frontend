@@ -15,21 +15,32 @@ import { GlobalStyle } from '../styles/global-styles';
 import { HomePage } from './pages/HomePage/Loadable';
 import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
+import { Login, Profile } from './pages';
+import { PrivateRoute } from './components/PrivateRoute';
 
 export function App() {
   const { i18n } = useTranslation();
   return (
     <BrowserRouter>
       <Helmet
-        titleTemplate="%s - React Boilerplate"
-        defaultTitle="React Boilerplate"
+        titleTemplate="%s - E Psychological Counseling"
+        defaultTitle="E Psychological Counseling"
         htmlAttributes={{ lang: i18n.language }}
       >
-        <meta name="description" content="A React Boilerplate application" />
+        <meta
+          name="description"
+          content="Application for online Psychological Counseling"
+        />
       </Helmet>
 
       <Switch>
         <Route exact path={process.env.PUBLIC_URL + '/'} component={HomePage} />
+        <PrivateRoute exact path="/profile" component={Profile} />
+        <Route
+          exact
+          path={process.env.PUBLIC_URL + '/login'}
+          component={Login}
+        />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
