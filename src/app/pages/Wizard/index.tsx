@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles,
   Theme,
@@ -18,6 +18,8 @@ import Typography from '@material-ui/core/Typography';
 import { StepIconProps } from '@material-ui/core/StepIcon';
 import { Helmet } from 'react-helmet-async';
 import { NavBar } from 'app/components';
+import { Container } from '@material-ui/core';
+import { ChooseDoctor, ChooseService, DescribeProblem } from './components';
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -104,25 +106,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
-}
-
-function getStepContent(step: number) {
-  switch (step) {
-    case 0:
-      return 'Select campaign settings...';
-    case 1:
-      return 'What is an ad group anyways?';
-    case 2:
-      return 'This is the bit I really care about!';
-    default:
-      return 'Unknown step';
-  }
+  return ['Choose service', 'Describe problem', 'Choose doctor'];
 }
 
 const Wizard = () => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
   const handleNext = () => {
@@ -173,9 +162,14 @@ const Wizard = () => {
             </div>
           ) : (
             <div>
-              <Typography className={classes.instructions}>
-                {getStepContent(activeStep)}
-              </Typography>
+              <Container>
+                {activeStep === 0 && <ChooseService />}
+
+                {activeStep === 1 && <DescribeProblem />}
+
+                {activeStep === 2 && <ChooseDoctor />}
+              </Container>
+
               <div>
                 <Button
                   disabled={activeStep === 0}
