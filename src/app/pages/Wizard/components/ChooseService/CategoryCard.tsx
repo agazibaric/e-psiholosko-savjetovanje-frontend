@@ -17,14 +17,13 @@ const useStyles = makeStyles({
 
 export interface CategoryCardProps {
   group: any;
-  onSelect: (group: any) => void
 }
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ group, onSelect }) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({ group }) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} onClick={onSelect}>
+    <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
           className={classes.media}

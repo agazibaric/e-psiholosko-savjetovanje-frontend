@@ -1,6 +1,8 @@
 import { Button, Container, Grid, Grow, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
+import { Service } from 'types';
 import { CategoryCard } from './CategoryCard';
+import { ServiceCard } from './ServiceCard';
 
 // Array of services group by category
 const groups = [
@@ -122,11 +124,25 @@ const getCategoryElements = selectCategory => {
     return (
       <Grow in={true} timeout={500 * (index + 1)}>
         <Grid item xs={12} sm={12} md={6}>
-          <CategoryCard group={group} onSelect={() => selectCategory(group)} />
+          <div onClick={() => selectCategory(group)}>
+            <CategoryCard group={group} />
+          </div>
         </Grid>
       </Grow>
     );
   });
+};
+
+const getServices = group => {
+  return group.services.map((service: Service, index) => (
+    <Grow in={true} timeout={500 * (index + 1)}>
+      <Grid item direction="column">
+        <div>
+          <ServiceCard service={service} />
+        </div>
+      </Grid>
+    </Grow>
+  ));
 };
 
 const ChooseService = () => {
@@ -139,7 +155,6 @@ const ChooseService = () => {
   };
 
   const selectCategory = category => {
-    console.log(category);
     setSelected(category);
     setStep(1);
   };
@@ -152,7 +167,18 @@ const ChooseService = () => {
             {getCategoryElements(selectCategory)}
           </Grid>
         )}
-        {step === 1 && <div>Step 2</div>}
+        {step === 1 && (
+          <Grid container spacing={1} alignItems="center">
+            <Grow in={true} timeout={500}>
+              <Grid item md={4}>
+                <CategoryCard group={selected} />
+              </Grid>
+            </Grow>
+            <Grid item md={8}>
+              <Grid container>{getServices(selected)}</Grid>
+            </Grid>
+          </Grid>
+        )}
       </Container>
       <div>
         <Button disabled={step === 0} onClick={handleBack}>
