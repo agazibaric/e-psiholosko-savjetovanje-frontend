@@ -20,6 +20,7 @@ import { Helmet } from 'react-helmet-async';
 import { NavBar } from 'app/components';
 import { Container } from '@material-ui/core';
 import { ChooseDoctor, ChooseService, DescribeProblem } from './components';
+import { Service } from 'types';
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -114,6 +115,9 @@ const Wizard = () => {
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
+  // First step of the wizard selects service
+  const [selectedService, setSelectedService] = useState<Service>();
+
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
@@ -124,6 +128,11 @@ const Wizard = () => {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const handleServiceSelected = (service: Service) => {
+    setSelectedService(service);
+    handleNext();
   };
 
   return (
@@ -163,7 +172,11 @@ const Wizard = () => {
           ) : (
             <div>
               <Container>
-                {activeStep === 0 && <ChooseService />}
+                {activeStep === 0 && (
+                  <ChooseService
+                    handleServiceSelected={handleServiceSelected}
+                  />
+                )}
 
                 {activeStep === 1 && <DescribeProblem />}
 
