@@ -123,6 +123,9 @@ const Wizard = () => {
   // First step of the wizard selects service
   const [selectedService, setSelectedService] = useState<Service>();
 
+  // Second step of the wizard describes problem by answering questions
+  const [answers, setAnswers] = useState<Array<any>>([]);
+
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
@@ -135,13 +138,19 @@ const Wizard = () => {
     setActiveStep(0);
   };
 
+  const handleContinueWizardWelcome = () => {
+    handleNext();
+  };
+
   const handleServiceSelected = (service: Service) => {
     setSelectedService(service);
     handleNext();
   };
 
-  const handleContinueWizardWelcome = () => {
+  const handleAnswersSubmit = (answers: Array<any>) => {
+    setAnswers(answers);
     handleNext();
+    console.log(answers);
   };
 
   return (
@@ -190,7 +199,9 @@ const Wizard = () => {
                   />
                 )}
 
-                {activeStep === 2 && <DescribeProblem />}
+                {activeStep === 2 && (
+                  <DescribeProblem handleAnswersSubmit={handleAnswersSubmit} />
+                )}
 
                 {activeStep === 3 && <ChooseDoctor />}
               </Container>
