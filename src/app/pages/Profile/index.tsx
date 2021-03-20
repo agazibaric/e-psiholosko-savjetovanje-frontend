@@ -35,6 +35,7 @@ const Profile = () => {
   const handleChangePassword = event => {
       event.preventDefault();
     
+      //TODO: api.post, change user's password
   };
 
   return (
@@ -52,6 +53,7 @@ const Profile = () => {
               margin="normal"
               required
               fullWidth
+              type="password"
               id="oldpassword"
               label="Old Password"
               name="oldpassword"
@@ -67,7 +69,7 @@ const Profile = () => {
               fullWidth
               name="newpassword"
               label="New Password"
-              type="newpassword"
+              type="password"
               id="newpassword"
               autoComplete="new-password"
               value={newPassword}
@@ -80,7 +82,7 @@ const Profile = () => {
               fullWidth
               name="repeatpassword"
               label="Repeat Password"
-              type="repeatpassword"
+              type="password"
               id="repeatpassword"
               autoComplete="repeat-password"
               value={repeatPassword}
