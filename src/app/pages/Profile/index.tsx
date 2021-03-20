@@ -25,6 +25,7 @@ const Profile = () => {
   const [repeatPassword, setRepeatPassword] = useState<string>('');
 
   function validateForm() {
+    //TODO: Check whether old password is correct
     return (
       oldPassword.length > 0 &&
       newPassword.length > 0 &&
@@ -87,6 +88,8 @@ const Profile = () => {
               autoComplete="repeat-password"
               value={repeatPassword}
               onChange={e => setRepeatPassword(e.target.value)}
+              error={newPassword !== repeatPassword && repeatPassword.length > 0}
+              helperText={newPassword !== repeatPassword && repeatPassword.length > 0 ? "Incorrectly repeated the new password!" : ""}
             />
             <Button
               type="submit"
