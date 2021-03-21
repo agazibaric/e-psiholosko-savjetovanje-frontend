@@ -77,7 +77,6 @@ function Register() {
 
   const handleRegister = async e => {
     e.preventDefault();
-    console.log(registerForm);
     try {
       const resp = await userService.register(registerForm);
       console.log(resp);

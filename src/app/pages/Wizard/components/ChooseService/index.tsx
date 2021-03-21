@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Grow, makeStyles } from '@material-ui/core';
+import { Container, Grid, Grow, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
 import { Service } from 'types';
 import { CategoryCard } from './CategoryCard';
@@ -129,10 +129,6 @@ const ChooseService = ({ handleServiceSelected }) => {
   // There are two steps: select group and select service
   const [step, setStep] = useState(0);
 
-  const handleBack = () => {
-    setStep(prevActiveStep => prevActiveStep - 1);
-  };
-
   const selectCategory = category => {
     setSelectedCategory(category);
     setStep(1);
@@ -191,11 +187,6 @@ const ChooseService = ({ handleServiceSelected }) => {
           </Grid>
         )}
       </Container>
-      <div>
-        <Button disabled={step === 0} onClick={handleBack}>
-          Back
-        </Button>
-      </div>
     </div>
   );
 };

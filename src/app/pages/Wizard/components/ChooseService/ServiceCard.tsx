@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Service } from 'types';
+import { CardActionArea } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -31,14 +32,16 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
 
   return (
     <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          {service.name}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          {service.description}
-        </Typography>
-      </CardContent>
+      <CardActionArea>
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            {service.name}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            {service.description}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };
