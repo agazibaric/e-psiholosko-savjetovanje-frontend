@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { validateForm } from 'formValidators/changePasswordValidator';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -24,18 +25,13 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState<string>('');
   const [repeatPassword, setRepeatPassword] = useState<string>('');
 
-  function validateForm() {
-    //TODO: Check whether old password is correct
-    return (
-      oldPassword.length > 0 &&
-      newPassword.length > 0 &&
-      newPassword === repeatPassword
-    );
-  }
+  
 
   const handleChangePassword = event => {
       event.preventDefault();
-    
+      console.log(oldPassword);
+      console.log(newPassword);
+      console.log(repeatPassword);
       //TODO: api.post, change user's password
   };
 
@@ -96,7 +92,7 @@ const Profile = () => {
               fullWidth
               variant="contained"
               color="primary"
-              disabled={!validateForm()}
+              disabled={!validateForm(oldPassword, newPassword, repeatPassword)}
               className={classes.submit}
             >
               Save Changes
