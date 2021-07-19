@@ -1,6 +1,7 @@
 import { Container, Grid, Grow, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
 import { Service } from 'types';
+import { WizardAction, WizardActionType } from '../../reducers/wizardReducer';
 import { CategoryCard } from './CategoryCard';
 import { ServiceCard } from './ServiceCard';
 
@@ -120,10 +121,10 @@ const useStyles = makeStyles({
 });
 
 export interface ChooseServiceProps {
-  handleServiceSelected: (service: Service) => void;
+  dispatch: React.Dispatch<WizardAction>;
 }
 
-const ChooseService = ({ handleServiceSelected }) => {
+const ChooseService: React.FC<ChooseServiceProps> = ({ dispatch }) => {
   const classes = useStyles();
   const [selectedCategory, setSelectedCategory] = useState(null);
   // There are two steps: select group and select service
@@ -135,7 +136,7 @@ const ChooseService = ({ handleServiceSelected }) => {
   };
 
   const selectService = (service: Service) => {
-    handleServiceSelected(service);
+    dispatch({ type: WizardActionType.SET_SERVICE, payload: { service } });
   };
 
   const getCategoryElements = () => {

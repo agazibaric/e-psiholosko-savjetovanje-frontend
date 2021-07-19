@@ -34,7 +34,7 @@ function logout() {
 }
 
 function getUser() {
-  return api.get<User>('/users/me').then(resp => {
+  return api.get<User>('/user/me').then(resp => {
     const user: User = resp.data;
     LocalStorage.setUser(user);
     return user;

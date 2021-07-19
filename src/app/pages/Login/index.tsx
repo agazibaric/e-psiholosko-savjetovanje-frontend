@@ -13,7 +13,7 @@ import {
   TextField,
   Typography,
 } from 'app/components';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { userActions } from 'actions';
 import { useHistory } from 'react-router-dom';
 
@@ -47,12 +47,13 @@ const Login = props => {
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleLogin = e => {
     e.preventDefault();
 
-    const { dispatch } = props;
     if (username && password) {
       dispatch(userActions.login(username, password));
       history.push('/');

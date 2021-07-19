@@ -2,6 +2,7 @@ import { Grid } from '@material-ui/core';
 import React, { useState } from 'react';
 import DoctorCard from './DoctorCard';
 import { Button } from 'app/components';
+import { WizardAction, WizardActionType } from '../../reducers/wizardReducer';
 
 const doctors = [
   {
@@ -48,10 +49,10 @@ const doctors = [
 ];
 
 export interface ChooseDoctorProps {
-  handleDoctorSelect: (doctor: any) => void;
+  dispatch: React.Dispatch<WizardAction>;
 }
 
-const ChooseDoctor: React.FC<ChooseDoctorProps> = ({ handleDoctorSelect }) => {
+const ChooseDoctor: React.FC<ChooseDoctorProps> = ({ dispatch }) => {
   const [selectedDoctors, setSelectedDoctors] = useState<Array<any>>([]);
 
   const selectDoctor = (doctor: any) => {
@@ -66,7 +67,11 @@ const ChooseDoctor: React.FC<ChooseDoctorProps> = ({ handleDoctorSelect }) => {
   };
 
   const handleOnClick = () => {
-    selectedDoctors.length > 0 && handleDoctorSelect(selectedDoctors);
+    selectedDoctors.length > 0 &&
+      dispatch({
+        type: WizardActionType.SET_DOCTORS,
+        payload: { doctors: selectedDoctors },
+      });
   };
 
   const selectAll = () => {

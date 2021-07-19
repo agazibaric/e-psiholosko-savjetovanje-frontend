@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import {
   makeStyles,
   Theme,
@@ -20,9 +20,13 @@ import {
   DescribeProblem,
   WizardWelcome,
 } from './components';
-import { Service } from 'types';
 import { Apps, Payment, People, QuestionAnswer } from '@material-ui/icons';
 import { Checkout } from './components/Checkout';
+import {
+  initialWizardState,
+  WizardAction,
+  wizardReducer,
+} from './reducers/wizardReducer';
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -115,17 +119,10 @@ function getSteps() {
 
 const Wizard = () => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
-  // First step selects service
-  const [selectedService, setSelectedService] = useState<Service>();
-
-  // Second step describes problem by answering questions
-  const [answers, setAnswers] = useState<Array<any>>([]);
-
-  // Third step chooses preferred doctors
-  const [doctors, setDoctors] = useState<any>();
+  const [wizardState, dispatch] = useReducer(wizardReducer, initialWizardState);
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -143,19 +140,8 @@ const Wizard = () => {
     handleNext();
   };
 
-  const handleServiceSelected = (service: Service) => {
-    setSelectedService(service);
-    handleNext();
-  };
-
-  const handleAnswersSubmit = (answers: Array<any>) => {
-    setAnswers(answers);
-    handleNext();
-    console.log(answers);
-  };
-
-  const handleDoctorSelect = (doctors: Array<any>) => {
-    setDoctors(doctors);
+  const dispatchWrapper: React.Dispatch<WizardAction> = value => {
+    dispatch(value);
     handleNext();
   };
 
@@ -164,7 +150,7 @@ const Wizard = () => {
   };
 
   const handleWizardDone = () => {
-    console.log(selectedService, answers, doctors);
+    console.log(wizardState);
   };
 
   return (
@@ -212,16 +198,23 @@ const Wizard = () => {
                 )}
                 {activeStep === 1 && (
                   <ChooseService
-                    handleServiceSelected={handleServiceSelected}
+                    //handleServiceSelected={handleServiceSelected}
+                    dispatch={dispatchWrapper}
                   />
                 )}
 
                 {activeStep === 2 && (
-                  <DescribeProblem handleAnswersSubmit={handleAnswersSubmit} />
+                  <DescribeProblem
+                    dispatch={dispatchWrapper}
+                    //handleAnswersSubmit={handleAnswersSubmit}
+                  />
                 )}
 
                 {activeStep === 3 && (
-                  <ChooseDoctor handleDoctorSelect={handleDoctorSelect} />
+                  <ChooseDoctor
+                    dispatch={dispatchWrapper}
+                    //handleDoctorSelect={handleDoctorSelect}
+                  />
                 )}
 
                 {activeStep === 4 && (

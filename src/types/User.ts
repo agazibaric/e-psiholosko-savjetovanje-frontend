@@ -14,3 +14,13 @@ export interface User {
 export interface Token {
   token: string
 }
+
+export interface Patient {
+  user: User;
+  diagnosis: string;
+}
+
+export interface Doctor {
+  user: User;
+  biography: string;
+}

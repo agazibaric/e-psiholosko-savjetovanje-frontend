@@ -1,6 +1,7 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Question } from 'types';
+import { WizardAction, WizardActionType } from '../../reducers/wizardReducer';
 import QAForm from './QAForm';
 
 const allQuestions: Array<Question> = [
@@ -92,12 +93,10 @@ const useStyles = makeStyles({
 });
 
 export interface DescribeProblemProps {
-  handleAnswersSubmit: (answers: Array<any>) => void;
+  dispatch: React.Dispatch<WizardAction>;
 }
 
-const DescribeProblem: React.FC<DescribeProblemProps> = ({
-  handleAnswersSubmit,
-}) => {
+const DescribeProblem: React.FC<DescribeProblemProps> = ({ dispatch }) => {
   const classes = useStyles();
   const [questions, setQuestions] = useState<Array<Question>>([]);
   const [questionIndex, setQuestionIndex] = useState<number>(0);
@@ -114,7 +113,10 @@ const DescribeProblem: React.FC<DescribeProblemProps> = ({
       { content: answer, questionId: questions[questionIndex].id },
     ];
     if (questionIndex === questions.length - 1) {
-      handleAnswersSubmit(concatAnswers);
+      dispatch({
+        type: WizardActionType.SET_ANSWERS,
+        payload: { answers: concatAnswers },
+      });
     } else {
       setAnswers(concatAnswers);
       setQuestionIndex(prevIndex => prevIndex + 1);

@@ -1,7 +1,7 @@
 import { RootState } from './RootState';
 import { User, Authority, Token } from './User';
 import { Service, ServiceCategory } from './Service';
-import { Question, AnswerOptions, Answer } from './Meeting';
+import { Question, AnswerOptions, Answer, Meeting, Message } from './Meeting';
 
 export type {
   RootState,
@@ -13,4 +13,6 @@ export type {
   Question,
   Answer,
   AnswerOptions,
+  Meeting,
+  Message
 };
